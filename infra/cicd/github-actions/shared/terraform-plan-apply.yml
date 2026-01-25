@@ -1,0 +1,53 @@
+name: terraform-plan-apply
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      workdir:
+        required: true
+        type: string
+    secrets:
+      AWS_ROLE_ARN:
+        required: true
+      AWS_REGION:
+        required: true
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        working-directory: ${{ inputs.workdir }}
+        run: terraform fmt -check
+
+      - name: Terraform init
+        working-directory: ${{ inputs.workdir }}
+        run: terraform init
+
+      - name: Terraform plan
+        working-directory: ${{ inputs.workdir }}
+        run: terraform plan
+
+      - name: Terraform apply
+        if: ${{ github.ref == 'refs/heads/main' }}
+        working-directory: ${{ inputs.workdir }}
+        run: terraform apply -auto-approve
