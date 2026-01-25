@@ -19,7 +19,7 @@ This setup uses GitHub Actions with AWS OIDC to deploy frontend and backend serv
 3. **Publish**: push Docker images to ECR (backend).
 4. **Deploy**:
    - Frontend: sync to S3, invalidate CloudFront.
-   - Backend: update ECS service with new image.
+   - Backend: update ECS service with new image (default tag `latest` in this scaffold).
 
 ## Environment Promotion
 

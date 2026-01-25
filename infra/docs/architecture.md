@@ -25,6 +25,7 @@ This repository uses a **multi-account, multi-environment AWS layout** similar t
 - **ECS on Fargate** for containerized services (API, workers).
 - **ALB** for traffic management, target groups for rolling deploys.
 - **Auto Scaling** based on CPU or request count.
+- **ECR** for container image storage with scan-on-push enabled.
 
 ## Data Layer
 

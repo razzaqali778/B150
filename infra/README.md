@@ -1,6 +1,6 @@
 # Infrastructure & CI/CD
 
-This folder provides a production-grade AWS infrastructure and CI/CD layout for a modern frontend + backend stack. It is organized to resemble patterns used by large-scale teams (multi-account, multi-environment, reusable modules, security and observability baked in).
+This folder provides a production-grade AWS infrastructure and CI/CD layout for a modern frontend + backend stack. It is organized to resemble patterns used by large-scale teams (multi-account, multi-environment, reusable modules, security and observability baked in). The repository also includes a sample frontend (`/frontend`) and backend (`/backend`) so you can trace the full delivery flow end-to-end.
 
 ## Structure
 
@@ -21,6 +21,7 @@ infra/
 - **Environment parity**: dev/staging/prod share the same modules, differing only in variables.
 - **Security first**: IAM least-privilege, KMS encryption, private subnets, and secrets management.
 - **Scalable delivery**: GitHub Actions pipelines deploy to AWS using OIDC and per-environment approvals.
+- **Realistic app flow**: frontend and backend code is included to make the CI/CD pipeline runnable and easy to follow.
 
 ## Getting Started
 
