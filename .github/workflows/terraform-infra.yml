@@ -1,0 +1,19 @@
+name: Terraform Infra
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "infra/terraform/**"
+      - ".github/workflows/terraform-infra.yml"
+  workflow_dispatch:
+
+jobs:
+  plan-apply-dev:
+    uses: ./infra/cicd/github-actions/shared/terraform-plan-apply.yml
+    with:
+      environment: "dev"
+      workdir: "infra/terraform/environments/dev"
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_DEV }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}

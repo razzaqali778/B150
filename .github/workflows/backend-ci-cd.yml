@@ -1,0 +1,24 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+      - "infra/**"
+      - ".github/workflows/backend-ci-cd.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: ./infra/cicd/github-actions/backend/build-deploy.yml
+    with:
+      environment: "dev"
+      dockerfile: "infra/cicd/docker/backend.Dockerfile"
+      image_tag: ${{ github.sha }}
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_DEV }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ECR_REPOSITORY_BACKEND: ${{ secrets.ECR_REPOSITORY_BACKEND }}
+      ECS_CLUSTER_NAME: ${{ secrets.ECS_CLUSTER_NAME }}
+      ECS_SERVICE_NAME: ${{ secrets.ECS_SERVICE_NAME }}
